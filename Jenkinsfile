@@ -17,6 +17,8 @@ pipeline {
       steps {
         sh "cat docker-compose.build.yml"
         sh "pwd"
+        sh "ls"
+        sh "docker version"
         sh "docker-compose -H ssh://${BUILD_HOST} -f /var/jenkins_home/workspace/docker-kvs/docker-compose.build.yml down"
         sh "docker-compose -H ssh://${BUILD_HOST} -f docker-compose.build.yml down"
         sh "docker -H ssh://${BUILD_HOST} volume prune -f"
