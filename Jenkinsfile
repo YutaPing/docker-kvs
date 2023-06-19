@@ -2,8 +2,8 @@ pipeline {
   agent any
   environment {
     DOCKERHUB_USER = "yutakachan"
-    BUILD_HOST = "root@192.168.1.24"
-    PROD_HOST = "root@192.168.1.23"
+    BUILD_HOST = "root@192.168.1.28"
+    PROD_HOST = "root@192.168.1.7"
     BUILD_TIMESTAMP = sh(script: "date +%Y%m%d-%H%M%S", returnStdout: true).trim()
   }
   stages {
@@ -16,9 +16,6 @@ pipeline {
     stage('Build') {
       steps {
         sh "cat docker-compose.build.yml"
-        sh "pwd"
-        sh "docker-compose -H ssh://${BUILD_HOST} version"
-        sh "docker-compose -H ssh://${BUILD_HOST} -f docker-compose.yml down"
         sh "docker-compose -H ssh://${BUILD_HOST} -f docker-compose.build.yml down"
         sh "docker -H ssh://${BUILD_HOST} volume prune -f"
         sh "docker-compose -H ssh://${BUILD_HOST} -f docker-compose.build.yml build"
