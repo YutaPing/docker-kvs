@@ -17,8 +17,9 @@ pipeline {
       steps {
         sh "cat docker-compose.build.yml"
         sh "pwd"
-        sh "ls"
         sh "whoami"
+        sh "cat /etc/group"
+        sh "ls -l /var/run/docker.sock"
         sh "docker version"
         sh "docker-compose -H ssh://${BUILD_HOST} -f /var/jenkins_home/workspace/docker-kvs/docker-compose.build.yml down"
         sh "docker-compose -H ssh://${BUILD_HOST} -f docker-compose.build.yml down"
